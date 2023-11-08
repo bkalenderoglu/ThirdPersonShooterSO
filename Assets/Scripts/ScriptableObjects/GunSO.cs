@@ -43,9 +43,22 @@ public class GunSO : ScriptableObject {
             lastShootTime = Time.time;
             shootSystem.Play();
 
-            Vector3 shootDirection = shootSystem.transform.forward + new Vector3(Random.Range(-shootConfig.spread.x, shootConfig.spread.x),
-                                                                                 Random.Range(-shootConfig.spread.y, shootConfig.spread.y),
-                                                                                 Random.Range(-shootConfig.spread.z, shootConfig.spread.z));
+            Vector3 mouseWorldPosition = Vector3.zero;
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+            if(Physics.Raycast(ray, out RaycastHit raycastHit, 999f)) {
+                mouseWorldPosition = raycastHit.point;
+            }
+
+            Vector3 worldAimTarget = mouseWorldPosition;
+            Vector3 aimDirection = (worldAimTarget - shootSystem.transform.position).normalized;
+
+            // SPREAD
+            //new Vector3(Random.Range(-shootConfig.spread.x, shootConfig.spread.x),
+            //            Random.Range(-shootConfig.spread.y, shootConfig.spread.y),
+            //            Random.Range(-shootConfig.spread.z, shootConfig.spread.z));
+
+            Vector3 shootDirection = aimDirection; // + SPREAD
             shootDirection.Normalize();
 
             if(Physics.Raycast(shootSystem.transform.position, shootDirection, out RaycastHit hitInfo, float.MaxValue, shootConfig.hitLayer)){

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b5cafb863f1f646878aa9aa0630436, type: 3}
   m_Name: Machinegun Trail Config
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 1199aab4ef7d6e44da9e2300b000e7e9, type: 2}
+  material: {fileID: 2100000, guid: 4c623d8818a5da542a19e92138656fba, type: 2}
   widthCurve:
     serializedVersion: 2
     m_Curve:
