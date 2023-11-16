@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -44,5 +45,18 @@ public class PlayerIK : MonoBehaviour
             animator.SetIKHintPosition(AvatarIKHint.RightElbow, rightElbowIK.position);
             animator.SetIKHintPositionWeight(AvatarIKHint.RightElbow, elbowIKAmount);
         }
+    }
+
+    public void SetGunStyle(bool isPistol) {
+        animator.SetBool("Pistol", isPistol);
+        animator.SetBool("Machinegun", !isPistol);
+    }
+
+    public void Setup(Transform gunParent) {
+        Transform[] allChildren = gunParent.GetComponentsInChildren<Transform>();
+        leftElbowIK = allChildren.FirstOrDefault(child => child.name == "LeftElbow");
+        rightElbowIK = allChildren.FirstOrDefault(child => child.name == "RightElbow");
+        leftHandIK = allChildren.FirstOrDefault(child => child.name == "LeftHand");
+        rightHandIK = allChildren.FirstOrDefault(child => child.name == "RightHand");
     }
 }

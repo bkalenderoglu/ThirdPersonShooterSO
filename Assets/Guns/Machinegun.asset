@@ -15,7 +15,9 @@ MonoBehaviour:
   type: 1
   gunName: Machinegun
   modelPrefab: {fileID: 4638496896245403333, guid: 5717c6db3219d454d8105284d550824a, type: 3}
-  spawnPoint: {x: 0, y: 0.223, z: -0.4}
+  spawnPoint: {x: -0.009, y: -0.01, z: -0.396}
   spawnRotation: {x: -180, y: 20, z: 2.1}
   shootConfig: {fileID: 11400000, guid: b0ec877283a8bd549a6f6b2df1112e4c, type: 2}
   trailConfig: {fileID: 11400000, guid: 980745b92c6df9740a2269f9f46c4377, type: 2}
+  damageConfig: {fileID: 11400000, guid: 708c6fa66d434c945989e026b3c43296, type: 2}
+  ammoConfig: {fileID: 11400000, guid: 40548524269272448b75a5390ad266d6, type: 2}

@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b294549690bcd541b6b6c46ece00286, type: 3}
   m_Name: Pistol Shoot Config
   m_EditorClassIdentifier: 
+  isHitScan: 1
+  bulletPrefab: {fileID: 7073989900756613955, guid: 53d0dd06e9cc82d49b3e5b2b334aafd7, type: 3}
+  bulletSpawnForce: 1000
   hitLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 321
   fireRate: 0.25
   spread: {x: 0.03, y: 0.03, z: 0.03}
+  spreadType: 0
+  shootType: 0
+  recoilRecoverySpeed: 1
+  maxSpreadTime: 1

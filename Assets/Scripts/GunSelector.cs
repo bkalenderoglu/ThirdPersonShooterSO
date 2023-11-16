@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [DisallowMultipleComponent]
 public class GunSelector : MonoBehaviour
@@ -9,6 +10,7 @@ public class GunSelector : MonoBehaviour
     [SerializeField] private Transform gunParent;
     [SerializeField] private List<GunSO> guns;
     [SerializeField] PlayerIK inverseKinematics;
+    public Camera activeCamera;
 
 
     [Space]
@@ -23,14 +25,15 @@ public class GunSelector : MonoBehaviour
             return;
         }
 
+        SetupGun(gun);
+
+    }
+
+    private void SetupGun(GunSO gun) {
         activeGun = gun;
-        gun.Spawn(gunParent, this);
+        gun.Spawn(gunParent, this, activeCamera);
 
-        Transform[] allChildren = gunParent.GetComponentsInChildren<Transform>();
-        inverseKinematics.leftElbowIK = allChildren.FirstOrDefault(child => child.name == "LeftElbow");
-        inverseKinematics.rightElbowIK = allChildren.FirstOrDefault(child => child.name == "RightElbow");
-        inverseKinematics.leftHandIK = allChildren.FirstOrDefault(child => child.name == "LeftHand");
-        inverseKinematics.rightHandIK = allChildren.FirstOrDefault(child => child.name == "RightHand");
-
+        inverseKinematics.SetGunStyle(activeGun.type == GunType.Pistol);
+        inverseKinematics.Setup(gunParent);
     }
 }

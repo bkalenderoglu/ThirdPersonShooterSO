@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -70,6 +71,9 @@ namespace StarterAssets
         [Tooltip("How far in degrees can you move the camera down")]
         public float BottomClamp = -30.0f;
 
+        [Tooltip("How far in degrees can you move the camera left and right")]
+        public float HorizontalClamp = 90f;
+
         [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
         public float CameraAngleOverride = 0.0f;
 
@@ -106,6 +110,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private GameObject _player;
 
         private const float _threshold = 0.01f;
 
@@ -126,10 +131,11 @@ namespace StarterAssets
 
         private void Awake()
         {
-            // get a reference to our main camera
+            // get a reference to our main camera/player
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                _player = GameObject.FindGameObjectWithTag("Player");
             }
         }
 
@@ -201,6 +207,18 @@ namespace StarterAssets
 
                 _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * Sensitivity;
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * Sensitivity;
+            }
+
+            Quaternion rotation = Quaternion.LookRotation(transform.forward);
+            Vector3 eulerAngles = rotation.eulerAngles;
+            float minY = eulerAngles.y - HorizontalClamp;
+            float maxY = eulerAngles.y + HorizontalClamp;
+
+            if(_cinemachineTargetYaw < minY) {
+                _cinemachineTargetYaw = minY;
+            }
+            else if(_cinemachineTargetPitch > maxY) {
+                _cinemachineTargetPitch = maxY;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -376,7 +394,7 @@ namespace StarterAssets
             {
                 if (FootstepAudioClips.Length > 0)
                 {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
+                    var index = UnityEngine.Random.Range(0, FootstepAudioClips.Length);
                     AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
                 }
             }
