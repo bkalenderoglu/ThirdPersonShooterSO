@@ -14,7 +14,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private float normalSensitivity;
     [SerializeField] private float aimSensitivity;
     [SerializeField] private GunSelector gunSelector;
-    [SerializeField] private bool autoReload = false;
+    [SerializeField] private bool autoReload = true;
     [SerializeField] private PlayerIK inverseKinematics;
     [SerializeField] private Animator animator;
     [SerializeField] private Image crosshair;
@@ -51,24 +51,18 @@ public class ThirdPersonShooterController : MonoBehaviour
             gunSelector.activeGun.Tick(Mouse.current.leftButton.isPressed);
         }
 
+        if(starterAssetsInputs.reload) {
+            Debug.Log("reload");
+        }
+
         if(ShouldManualReload() || ShouldAutoReload()) {
             isReloading = true;
             animator.SetTrigger("Reload");
-            //inverseKinematics.HandIKAmount = 0.25f;
-            //inverseKinematics.ElbowIKAmount = 0.25f;
+            inverseKinematics.handIKAmount = 0.25f;
+            inverseKinematics.elbowIKAmount = 0.25f;
         }
 
         UpdateCrosshair();
-
-        //Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        //Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        //if(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue)) {
-        //    debugTransform.position = raycastHit.point;
-        //}
-        //else {
-        //    debugTransform.position = mainCamera.transform.position + mainCamera.transform.forward * 200f;
-
-        //}
     }
 
 
@@ -103,13 +97,11 @@ public class ThirdPersonShooterController : MonoBehaviour
                 crosshair.rectTransform.anchoredPosition = Vector2.zero;
             }
         }
-        
-        
     }
 
     private bool ShouldManualReload() {
         return !isReloading
-            && Keyboard.current.rKey.wasReleasedThisFrame
+            && starterAssetsInputs.reload
             && gunSelector.activeGun.CanReload();
     }
 
@@ -122,8 +114,8 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private void EndReload() {
         gunSelector.activeGun.EndReload();
-        //inverseKinematics.HandIKAmount = 1f;
-        //inverseKinematics.ElbowIKAmount = 1f;
+        inverseKinematics.handIKAmount = 1f;
+        inverseKinematics.elbowIKAmount = 1f;
         isReloading = false;
     }
 }

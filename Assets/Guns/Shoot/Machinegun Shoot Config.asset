@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHitScan: 0
   bulletPrefab: {fileID: 7073989900756613955, guid: 53d0dd06e9cc82d49b3e5b2b334aafd7, type: 3}
-  bulletSpawnForce: 2500
+  bulletSpawnForce: 2750
   hitLayer:
     serializedVersion: 2
     m_Bits: 321
   fireRate: 0.1
-  spread: {x: 0.3, y: 0.3, z: 0.3}
+  spread: {x: 1, y: 1, z: 1}
   spreadType: 1
   shootType: 0
   recoilRecoverySpeed: 0.5

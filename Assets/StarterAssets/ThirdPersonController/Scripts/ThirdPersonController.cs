@@ -209,17 +209,17 @@ namespace StarterAssets
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * Sensitivity;
             }
 
-            Quaternion rotation = Quaternion.LookRotation(transform.forward);
-            Vector3 eulerAngles = rotation.eulerAngles;
-            float minY = eulerAngles.y - HorizontalClamp;
-            float maxY = eulerAngles.y + HorizontalClamp;
+            //Quaternion rotation = Quaternion.LookRotation(transform.forward);
+            //Vector3 eulerAngles = rotation.eulerAngles;
+            //float minY = eulerAngles.y - HorizontalClamp;
+            //float maxY = eulerAngles.y + HorizontalClamp;
 
-            if(_cinemachineTargetYaw < minY) {
-                _cinemachineTargetYaw = minY;
-            }
-            else if(_cinemachineTargetPitch > maxY) {
-                _cinemachineTargetPitch = maxY;
-            }
+            //if(_cinemachineTargetYaw < minY) {
+            //    _cinemachineTargetYaw = minY;
+            //}
+            //else if(_cinemachineTargetPitch > maxY) {
+            //    _cinemachineTargetPitch = maxY;
+            //}
 
             // clamp our rotations so our values are limited 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);

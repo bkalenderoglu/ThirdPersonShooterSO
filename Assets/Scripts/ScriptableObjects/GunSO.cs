@@ -79,36 +79,6 @@ public class GunSO : ScriptableObject {
             }else {
                 DoProjectileShoot(shootDirection);
             }
-
-            
-
-            //Vector3 mouseWorldPosition = Vector3.zero;
-            //Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            //Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-            //if(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, shootConfig.hitLayer)) {
-            //    mouseWorldPosition = raycastHit.point;
-            //}
-
-            //Vector3 worldAimTarget = mouseWorldPosition;
-            //Vector3 aimDirection = (worldAimTarget - shootSystem.transform.position).normalized;
-            //Debug.Log(shootSystem.transform.root.name);
-            // SPREAD
-            //new Vector3(Random.Range(-shootConfig.spread.x, shootConfig.spread.x),
-            //            Random.Range(-shootConfig.spread.y, shootConfig.spread.y),
-            //            Random.Range(-shootConfig.spread.z, shootConfig.spread.z));
-
-
-
-            //Vector3 shootDirection = GetAimDirection(); // + SPREAD
-            //shootDirection.Normalize();
-
-
-            //if(Physics.Raycast(shootSystem.transform.position, shootDirection, out RaycastHit hitInfo, float.MaxValue, shootConfig.hitLayer)){
-            //    activeMonoBehaviour.StartCoroutine(PlayTrail(shootSystem.transform.position, hitInfo.point, hitInfo));
-            //}
-            //else {
-            //    activeMonoBehaviour.StartCoroutine(PlayTrail(shootSystem.transform.position, (shootDirection * trailConfig.missDistanceThreshold), new RaycastHit()));
-            //}
         }
     }
 
@@ -117,8 +87,9 @@ public class GunSO : ScriptableObject {
     }
 
     public bool CanReload() {
-            return ammoConfig.CanReload();
-        }
+        return ammoConfig.CanReload();
+    }
+
     public void EndReload() {
         ammoConfig.Reload();
     }
@@ -235,6 +206,7 @@ public class GunSO : ScriptableObject {
     private void HandleBulletImpact(float distanceTraveled, Vector3 hitLocation, Vector3 hitNormal, Collider hitCollider) {
         if(hitCollider.TryGetComponent(out IDamageable damageable)) {
             damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled));
+            Debug.Log("damage taken");
         }
     }
 
